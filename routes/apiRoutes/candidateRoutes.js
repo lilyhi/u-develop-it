@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../../db/connection');
 const inputCheck = require('../../utils/inputCheck');
 
-// GET all candidates
+// GET all candidates and their party affiliation
 router.get('/candidates', (req, res) => {
   const sql = `SELECT candidates.*, parties.name
                 AS party_name
@@ -23,7 +23,7 @@ router.get('/candidates', (req, res) => {
   });
 });
 
-// GET a single candidate
+// GET a single candidate with party affiliation
 router.get('/candidate/:id', (req, res) => {
   const sql = `SELECT candidates.*, parties.name
                 AS party_name
@@ -82,9 +82,11 @@ router.put('/candidate/:id', (req, res) => {
     res.status(400).json({ error: errors });
     return;
   }
+
   const sql = `UPDATE candidates SET party_id = ?
               WHERE id = ?`;
   const params = [req.body.party_id, req.params.id];
+  
   db.query(sql, params, (err, result) => {
     if (err) {
       res.status(400).json({ error: err.message });

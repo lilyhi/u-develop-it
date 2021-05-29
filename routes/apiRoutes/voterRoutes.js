@@ -4,6 +4,7 @@ const router = express.Router();
 const db = require('../../db/connection');
 const inputCheck = require('../../utils/inputCheck');
 
+// Get all voters alphabetized by last name
 router.get('/voters', (req, res) => {
   const sql = `SELECT * FROM voters ORDER BY last_name`;
 

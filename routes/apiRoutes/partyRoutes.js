@@ -21,6 +21,7 @@ router.get('/parties', (req, res) => {
 router.get('/party/:id', (req, res) => {
   const sql = `SELECT * FROM parties WHERE id = ?`;
   const params = [req.params.id];
+
   db.query(sql, params, (err, row) => {
     if(err) {
       res.status(400).json({ error: err.message });
@@ -33,10 +34,11 @@ router.get('/party/:id', (req, res) => {
   });
 });
 
-// DELETE parties 
+// DELETE a party
 router.delete('/party/:id', (req, res) => {
   const sql = `DELETE FROM parties WHERE id = ?`;
   const params = [req.params.id];
+
   db.query(sql, params, (err, result) => {
     if (err) {
       res.status(400).json({ error: res.message });
